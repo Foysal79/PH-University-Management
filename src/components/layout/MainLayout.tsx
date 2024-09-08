@@ -1,57 +1,54 @@
-import { Layout, Menu, MenuProps } from "antd";
-import { NavLink, Outlet } from "react-router-dom";
-const { Header, Content, Sider } = Layout;
+import { Button, Layout } from "antd";
+import { Outlet } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import { useAppDispatch } from "../../redux/hook";
+import { logout } from "../../redux/features/auth/authSlice";
+const { Header, Content } = Layout;
 
-const items: MenuProps["items"] = [
-  {
-    key: "Dashboard",
-    label: <NavLink to="/admin/dashboard">Dashboard</NavLink>,
-  },
-  {
-    key: "User Management",
-    label: "User Management",
-    children: [
-      {
-        key: "create Admin",
-        label: <NavLink to="/admin/create-admin"> Create Admin </NavLink>,
-      },
-      {
-        key: "create Faculty",
-        label: <NavLink to="/admin/create-faculty"> Create Faculty </NavLink>,
-      },
-      {
-        key: "create student",
-        label: <NavLink to="/admin/create-student"> Create student </NavLink>,
-      },
-    ],
-  },
-];
+// const items: MenuProps["items"] = [
+//   {
+//     key: "Dashboard",
+//     label: <NavLink to="/admin/dashboard">Dashboard</NavLink>,
+//   },
+//   {
+//     key: "User Management",
+//     label: "User Management",
+//     children: [
+//       {
+//         key: "create Admin",
+//         label: <NavLink to="/admin/create-admin"> Create Admin </NavLink>,
+//       },
+//       {
+//         key: "create Faculty",
+//         label: <NavLink to="/admin/create-faculty"> Create Faculty </NavLink>,
+//       },
+//       {
+//         key: "create student",
+//         label: <NavLink to="/admin/create-student"> Create student </NavLink>,
+//       },
+//     ],
+//   },
+// ];
 
 const MainLayout = () => {
+
+  const dispatch = useAppDispatch();
+
+
+  const handleLogout = () => {
+
+    
+    dispatch(logout())
+  }
+
+
   return (
     <Layout style={{ height: "100vh" }}>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
-      >
-        <div style={{ color: "white", textAlign: "center", marginTop: "5px", marginBottom : '2px' }}>
-          <NavLink to='/' ><h1 style={{color : "white"}} >PH University</h1></NavLink>
-        </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["4"]}
-          items={items}
-        />
-      </Sider>
+      <Sidebar />
       <Layout>
-        <Header style={{ padding: 0 }} />
+        <Header>
+          <Button onClick={handleLogout}> LogOut </Button>
+        </Header>
         <Content style={{ margin: "24px 16px 0" }}>
           <div
             style={{
